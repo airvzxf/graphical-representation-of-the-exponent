@@ -1,0 +1,234 @@
+:root {
+    --bg-color: #0f172a;
+    --card-bg: #1e293b;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent-primary: #38bdf8;
+    --accent-secondary: #818cf8;
+    --color-unit: #10b981;
+    --color-expansion: #38bdf8;
+    --color-partition: #fb7185;
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.5;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    height: 85vh; /* Altura fija relativa para estabilidad */
+    max-height: 800px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+@media (max-height: 600px) {
+    .container {
+        height: 95vh;
+    }
+}
+
+#fullscreen-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#fullscreen-btn:hover {
+    background: rgba(15, 23, 42, 0.9);
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.container:fullscreen {
+    max-width: none;
+    max-height: none;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+}
+
+.container:fullscreen main {
+    flex: 1;
+}
+
+header {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(to right, #1e293b, #334155);
+    border-bottom: 1px solid #334155;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+header p {
+    color: var(--text-secondary);
+}
+
+#math-display {
+    color: var(--text-primary);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.equation-container {
+    margin-top: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cancellation-note {
+    font-size: 0.8rem;
+    padding: 1rem;
+    background-color: rgba(16, 185, 129, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid var(--color-unit);
+    color: var(--text-secondary);
+}
+
+.cancellation-note strong {
+    color: var(--color-unit);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    padding: 1.5rem;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+@media (max-width: 900px) {
+    main {
+        flex-direction: column;
+    }
+}
+
+.canvas-container {
+    flex: 2;
+    background-color: #020617;
+    border-radius: var(--border-radius);
+    border: 1px solid #334155;
+    position: relative;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #0f172a66;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid #334155;
+    overflow-y: auto; /* Permitir scroll si los controles son muchos */
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+input[type="number"] {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
+
+.info-panel {
+    background-color: #33415544;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-primary);
+}
+
+#formula-explanation {
+    margin-bottom: 0.5rem;
+    font-family: monospace;
+}
+
+#result-explanation {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+footer {
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border-top: 1px solid #334155;
+}

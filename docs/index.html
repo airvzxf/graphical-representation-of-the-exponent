@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de Exponentes - Expansión y Compresión</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container" id="main-container">
+        <button id="fullscreen-btn" title="Pantalla Completa">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+        <header>
+            <h1>Visualizador de Exponentes</h1>
+            <p>La potencia como expansión y compresión geométrica</p>
+            <div class="equation-container">
+                <span id="math-display">5<sup>3</sup> = 125</span>
+            </div>
+        </header>
+
+        <main>
+            <div class="canvas-container">
+                <canvas id="exponentCanvas"></canvas>
+            </div>
+
+            <aside class="controls">
+                <div class="control-group">
+                    <label for="base-input">Base (n): <span id="base-val">2</span></label>
+                    <input type="range" id="base-input" min="0" max="4" value="2" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label for="exponent-slider">Exponente (k): <span id="exponent-val">3</span></label>
+                    <input type="range" id="exponent-slider" min="-4" max="4" value="3" step="1">
+                </div>
+
+                <div class="info-panel">
+                    <div id="formula-explanation">
+                        <strong>Fórmula:</strong> <span id="formula-text">5 * 5 * 5</span>
+                    </div>
+                    <div id="result-explanation">
+                        La unidad se ha expandido 125 veces.
+                    </div>
+                </div>
+
+                <div class="cancellation-note">
+                    <strong>Principio de Cancelación:</strong>
+                    <p>Si multiplicas la expansión (n<sup>k</sup>) por la compresión (n<sup>-k</sup>), regresas exactamente a la unidad base (1).</p>
+                </div>
+            </aside>
+        </main>
+
+        <footer>
+            <p>Creado para visualizar el impacto geométrico de la potencia en el conjunto de los números enteros (Z)</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
