@@ -58,7 +58,7 @@ function updateUI() {
 
     let result = Math.pow(base, exponent);
     let formattedResult = result < 0.0001 ? result.toExponential(4) : (Number.isInteger(result) ? result.toLocaleString() : result.toFixed(4));
-    
+
     if (base === 0 && exponent < 0) {
         formattedResult = "Indefinido";
         resultExplanation.textContent = "La división por cero no está definida.";
@@ -86,7 +86,7 @@ function updateUI() {
     const count = Math.max(1, Math.pow(base, Math.abs(exponent)));
     const cols = Math.ceil(Math.sqrt(count));
     const rows = Math.ceil(count / cols);
-    
+
     targetZoom = minDim / Math.max(cols * unitSize, rows * unitSize);
     targetZoom = Math.min(Math.max(targetZoom, 0.01), 1); // No necesitamos zoom mayor a 1 para unidades
 }
@@ -97,7 +97,7 @@ function drawBlock(x, y, size, color, alpha = 1, label = "") {
     ctx.fillStyle = color;
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
     ctx.lineWidth = Math.max(0.5, 1 / currentZoom);
-    
+
     const padding = size * 0.05;
     ctx.beginPath();
     if (ctx.roundRect) {
@@ -110,8 +110,14 @@ function drawBlock(x, y, size, color, alpha = 1, label = "") {
 
     if (label && currentZoom * size > 15) {
         ctx.fillStyle = 'white';
-        // Ajustar tamaño de fuente si el label es largo (fracción)
-        const fontSize = label.length > 3 ? size * 0.25 : size * 0.4;
+        // Ajustar tamaño de fuente dinámicamente según la longitud del texto
+        let fontSize = size * 0.4;
+        if (label.length > 3) {
+            fontSize = size * (1.2 / label.length);
+        }
+        // Limitar tamaño mínimo y máximo razonable
+        fontSize = Math.min(fontSize, size * 0.4);
+
         ctx.font = `bold ${fontSize}px Arial`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
@@ -144,18 +150,12 @@ function draw() {
         const totalW = cols * unitSize;
         const totalH = rows * unitSize;
 
-        // Determinar la etiqueta
-        let label = "1";
-        if (exponent < 0) {
-            label = `1/${count}`;
-        }
-
         for (let i = 0; i < count; i++) {
             const r = Math.floor(i / cols);
             const c = i % cols;
             const x = (c * unitSize) - totalW / 2;
             const y = (r * unitSize) - totalH / 2;
-            
+
             // Lógica de Agrupación Exponencial (Colores)
             let groupIndex = 0;
             if (i > 0 && base > 1) {
@@ -163,6 +163,8 @@ function draw() {
             } else if (i > 0) {
                 groupIndex = i;
             }
+
+            const label = exponent < 0 ? `${i + 1}/${count}` : `${i + 1}`;
 
             drawBlock(x, y, unitSize, groupColors[groupIndex % groupColors.length], 1, label);
         }
